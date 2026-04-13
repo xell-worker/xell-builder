@@ -1,0 +1,156 @@
+name: XeLL Build
+run-name: XeLL Build (${{ inputs.id }})
+
+on:
+  workflow_dispatch:
+    inputs:
+      id:
+        description: "Build ID"
+        required: true
+      date:
+        description: "Build Date"
+        required: true
+      background_color:
+        description: "Background Color"
+        required: true
+        default: "0xD8444E00"
+      foreground_color:
+        description: "Foreground Color"
+        required: true
+        default: "0xFFFFFF00"
+      ascii_art:
+        description: "ASCII Art (base64-encoded)"
+        required: false
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/barrenechea/libxenon:latest
+    if: github.actor == 'xell-worker'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          repository: barrenechea/xell-reloaded
+          fetch-depth: 0
+
+      - name: Export variables
+        run: |
+          echo DEVKITXENON=/usr/local/xenon >> $GITHUB_ENV
+          echo /usr/local/xenon/bin >> $GITHUB_PATH
+          echo /usr/local/xenon/usr/bin >> $GITHUB_PATH
+
+      - name: Configure git safe directory
+        run: git config --global --add safe.directory "$(pwd)"
+
+      - name: Set Colors
+        run: sed -i "s/console_set_colors(CONSOLE_COLOR_BLUE,CONSOLE_COLOR_WHITE);/console_set_colors(${{ inputs.background_color }},${{ inputs.foreground_color }});/" source/lv2/main.c
+
+      - name: Set ASCII Art
+        id: asciiart
+        if: ${{ inputs.ascii_art }}
+        shell: bash
+        run: |
+          # Create a temporary file
+          touch /tmp/new_asciiart.h
+
+          # Add the opening of the asciiart definition
+          echo 'static char* asciiart =' > /tmp/new_asciiart.h
+
+          # Decode base64 ASCII art to a file
+          echo "${{ inputs.ascii_art }}" | base64 -d > /tmp/ascii_input.txt
+
+          # Process each line of the input ASCII art and format it properly
+          while IFS= read -r line; do
+            # Escape backslashes
+            escaped_line=$(echo "$line" | sed 's/\\/\\\\/g')
+            # Escape any double quotes
+            escaped_line=$(echo "$escaped_line" | sed 's/"/\\"/g')
+            # Add the line with proper C string formatting
+            echo '"'"$escaped_line"'\n"' >> /tmp/new_asciiart.h
+          done < /tmp/ascii_input.txt
+
+          # Add the closing part with VERSION
+          echo '"             Free60.org XeLL - Xenon Linux Loader " VERSION "\n";' >> /tmp/new_asciiart.h
+
+          # Add the asciitail part
+          echo 'static char* asciitail =' >> /tmp/new_asciiart.h
+          echo '"    Special Corona & Winchester Compatible XeLL version\n\n";' >> /tmp/new_asciiart.h
+
+          # Ensure CP437 encoding
+          iconv -f UTF-8 -t CP437 /tmp/new_asciiart.h > /tmp/new_asciiart_cp437.h || cp /tmp/new_asciiart.h /tmp/new_asciiart_cp437.h
+
+          # Replace the original file
+          cp /tmp/new_asciiart_cp437.h source/lv2/asciiart.h
+
+      - name: Build
+        run: make dist
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          path: XeLL_Reloaded-2stages-*.tar.gz
+          compression-level: 0
+
+  commit:
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Download Artifact
+        continue-on-error: true
+        uses: actions/download-artifact@v8
+        with:
+          path: /tmp/artifact
+
+      - name: Fetch build logs
+        run: |
+          JOB_ID=$(curl -s \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs" \
+            | jq -r '.jobs[] | select(.name=="build") | .id')
+          curl -sL \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/jobs/${JOB_ID}/logs" \
+            -o /tmp/log.txt
+
+      - name: Place artifact
+        run: |
+          DATE="${{ inputs.date }}"
+          YYYY="${DATE:0:4}"
+          MMDD="${DATE:4:4}"
+          DEST="${YYYY}/${MMDD}/${{ inputs.id }}"
+          mkdir -p "$DEST"
+          TAR_FILE=$(find /tmp/artifact -name "XeLL_Reloaded-2stages-*.tar.gz" 2>/dev/null | head -1)
+          if [ -n "$TAR_FILE" ]; then
+            echo "$(basename "$TAR_FILE")" > "$DEST/original-filename.txt"
+            mv "$TAR_FILE" "$DEST/${{ inputs.id }}.tar.gz"
+          fi
+          mv /tmp/log.txt "$DEST/"
+          {
+            if [ -n "${{ inputs.ascii_art }}" ]; then
+              echo "${{ inputs.ascii_art }}" | base64 -d
+              echo ""
+              echo ""
+            fi
+            echo "background_color=${{ inputs.background_color }}"
+            echo "foreground_color=${{ inputs.foreground_color }}"
+          } > "$DEST/generation-data.txt"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Build ${{ inputs.id }} (${{ inputs.date }})"
+          git pull --rebase origin main
+          git push --force-with-lease
