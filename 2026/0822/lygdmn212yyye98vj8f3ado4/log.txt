@@ -1,0 +1,501 @@
+﻿2026-08-22T17:48:50.6934109Z Current runner version: '2.336.0'
+2026-08-22T17:48:50.6953808Z ##[group]Runner Image Provisioner
+2026-08-22T17:48:50.6954502Z Hosted Compute Agent
+2026-08-22T17:48:50.6954900Z Version: 20260729.566
+2026-08-22T17:48:50.6955379Z Commit: cf7153fe6e25b664e8693c24944bf2b00355d109
+2026-08-22T17:48:50.6955882Z Build Date: 2026-07-29T19:17:02Z
+2026-08-22T17:48:50.6956348Z Worker ID: {b032dd77-dd7a-437d-9eb5-aeb36c2f462a}
+2026-08-22T17:48:50.6956879Z Azure Region: centralus
+2026-08-22T17:48:50.6957278Z ##[endgroup]
+2026-08-22T17:48:50.6958277Z ##[group]Operating System
+2026-08-22T17:48:50.6958689Z Ubuntu
+2026-08-22T17:48:50.6959055Z 24.04.4
+2026-08-22T17:48:50.6959435Z LTS
+2026-08-22T17:48:50.6959796Z ##[endgroup]
+2026-08-22T17:48:50.6960187Z ##[group]Runner Image
+2026-08-22T17:48:50.6960637Z Image: ubuntu-24.04
+2026-08-22T17:48:50.6961025Z Version: 20260816.277.1
+2026-08-22T17:48:50.6961973Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260816.277/images/ubuntu/Ubuntu2404-Readme.md
+2026-08-22T17:48:50.6963038Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260816.277
+2026-08-22T17:48:50.6964078Z ##[endgroup]
+2026-08-22T17:48:50.6964940Z ##[group]GITHUB_TOKEN Permissions
+2026-08-22T17:48:50.6966770Z Actions: read
+2026-08-22T17:48:50.6967157Z Contents: write
+2026-08-22T17:48:50.6967630Z Metadata: read
+2026-08-22T17:48:50.6968002Z ##[endgroup]
+2026-08-22T17:48:50.6969857Z Secret source: Actions
+2026-08-22T17:48:50.6970697Z Prepare workflow directory
+2026-08-22T17:48:50.7770554Z Prepare all required actions
+2026-08-22T17:48:50.7808406Z Getting action download info
+2026-08-22T17:48:50.9564596Z Download action repository 'actions/checkout@v6' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+2026-08-22T17:48:51.3278966Z Download action repository 'actions/upload-artifact@v7' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+2026-08-22T17:48:51.6313643Z Complete job name: build
+2026-08-22T17:48:51.6719777Z ##[group]Checking docker version
+2026-08-22T17:48:51.6732138Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2026-08-22T17:48:51.7482358Z '1.48'
+2026-08-22T17:48:51.7492931Z Docker daemon API version: '1.48'
+2026-08-22T17:48:51.7494950Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2026-08-22T17:48:51.7647388Z '1.48'
+2026-08-22T17:48:51.7657515Z Docker client API version: '1.48'
+2026-08-22T17:48:51.7662336Z ##[endgroup]
+2026-08-22T17:48:51.7664795Z ##[group]Clean up resources from previous jobs
+2026-08-22T17:48:51.7669466Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=eb5f52"
+2026-08-22T17:48:51.7794417Z ##[command]/usr/bin/docker network prune --force --filter "label=eb5f52"
+2026-08-22T17:48:51.7904020Z ##[endgroup]
+2026-08-22T17:48:51.7904764Z ##[group]Create local container network
+2026-08-22T17:48:51.7912945Z ##[command]/usr/bin/docker network create --label eb5f52 github_network_8309d4f82eb64fc4a0bd2ed8b10cc646
+2026-08-22T17:48:51.9042325Z 3d9ba5e75061b3645514a3246b546d8a883dea12330951ae9308deb2182ddfda
+2026-08-22T17:48:51.9051853Z ##[endgroup]
+2026-08-22T17:48:51.9076352Z ##[group]Starting job container
+2026-08-22T17:48:51.9099079Z ##[command]/usr/bin/docker --config /home/runner/work/_temp/.docker_081b5877-d4af-479b-a1ed-cfaa4d1667c2 login ghcr.io -u xell-worker --password-stdin
+2026-08-22T17:48:52.2927505Z ##[command]/usr/bin/docker --config /home/runner/work/_temp/.docker_081b5877-d4af-479b-a1ed-cfaa4d1667c2 pull ghcr.io/barrenechea/libxenon:latest
+2026-08-22T17:48:53.1793006Z latest: Pulling from barrenechea/libxenon
+2026-08-22T17:48:53.5683570Z 5a7813e071bf: Pulling fs layer
+2026-08-22T17:48:53.5684504Z 2206efc85745: Pulling fs layer
+2026-08-22T17:48:53.5684893Z 59772ddb73a9: Pulling fs layer
+2026-08-22T17:48:53.5685304Z e00b9945ca73: Pulling fs layer
+2026-08-22T17:48:53.5685682Z 97ccfbb4cde9: Pulling fs layer
+2026-08-22T17:48:53.5686036Z 4f4fb700ef54: Pulling fs layer
+2026-08-22T17:48:53.5686498Z 167e6d883130: Pulling fs layer
+2026-08-22T17:48:53.5686875Z f08d9b17cc6d: Pulling fs layer
+2026-08-22T17:48:53.5687721Z a9817a810f10: Pulling fs layer
+2026-08-22T17:48:53.5688141Z 022bd5a410ff: Pulling fs layer
+2026-08-22T17:48:53.5688535Z 38db9e8e6d70: Pulling fs layer
+2026-08-22T17:48:53.5689542Z e521cd94a500: Pulling fs layer
+2026-08-22T17:48:53.5689875Z e00b9945ca73: Waiting
+2026-08-22T17:48:53.5690315Z 97ccfbb4cde9: Waiting
+2026-08-22T17:48:53.5690684Z 4f4fb700ef54: Waiting
+2026-08-22T17:48:53.5691056Z a9817a810f10: Waiting
+2026-08-22T17:48:53.5691356Z e521cd94a500: Waiting
+2026-08-22T17:48:53.5691690Z 38db9e8e6d70: Waiting
+2026-08-22T17:48:53.5691978Z 167e6d883130: Waiting
+2026-08-22T17:48:53.5692307Z f08d9b17cc6d: Waiting
+2026-08-22T17:48:53.7784414Z 2206efc85745: Verifying Checksum
+2026-08-22T17:48:53.7788667Z 2206efc85745: Download complete
+2026-08-22T17:48:53.9610751Z e00b9945ca73: Verifying Checksum
+2026-08-22T17:48:53.9611778Z e00b9945ca73: Download complete
+2026-08-22T17:48:54.1244360Z 97ccfbb4cde9: Verifying Checksum
+2026-08-22T17:48:54.1245408Z 97ccfbb4cde9: Download complete
+2026-08-22T17:48:54.2754886Z 4f4fb700ef54: Verifying Checksum
+2026-08-22T17:48:54.2755911Z 4f4fb700ef54: Download complete
+2026-08-22T17:48:54.3117274Z 5a7813e071bf: Verifying Checksum
+2026-08-22T17:48:54.3118793Z 5a7813e071bf: Download complete
+2026-08-22T17:48:54.5296189Z f08d9b17cc6d: Verifying Checksum
+2026-08-22T17:48:54.5298246Z f08d9b17cc6d: Download complete
+2026-08-22T17:48:54.7186366Z a9817a810f10: Verifying Checksum
+2026-08-22T17:48:54.7187551Z a9817a810f10: Download complete
+2026-08-22T17:48:55.0574035Z 022bd5a410ff: Verifying Checksum
+2026-08-22T17:48:55.0574681Z 022bd5a410ff: Download complete
+2026-08-22T17:48:55.1053992Z 5a7813e071bf: Pull complete
+2026-08-22T17:48:55.4317272Z 38db9e8e6d70: Verifying Checksum
+2026-08-22T17:48:55.4317937Z 38db9e8e6d70: Download complete
+2026-08-22T17:48:55.8169899Z e521cd94a500: Verifying Checksum
+2026-08-22T17:48:57.3842763Z e521cd94a500: Download complete
+2026-08-22T17:48:57.3843856Z 59772ddb73a9: Verifying Checksum
+2026-08-22T17:48:57.3844379Z 59772ddb73a9: Download complete
+2026-08-22T17:49:02.0016494Z 2206efc85745: Pull complete
+2026-08-22T17:49:05.4165937Z 167e6d883130: Verifying Checksum
+2026-08-22T17:49:05.4166436Z 167e6d883130: Download complete
+2026-08-22T17:49:09.7704701Z 59772ddb73a9: Pull complete
+2026-08-22T17:49:09.7798719Z e00b9945ca73: Pull complete
+2026-08-22T17:49:09.7922956Z 97ccfbb4cde9: Pull complete
+2026-08-22T17:49:09.7996789Z 4f4fb700ef54: Pull complete
+2026-08-22T17:49:21.9646548Z 167e6d883130: Pull complete
+2026-08-22T17:49:21.9782710Z f08d9b17cc6d: Pull complete
+2026-08-22T17:49:21.9875804Z a9817a810f10: Pull complete
+2026-08-22T17:49:22.0902163Z 022bd5a410ff: Pull complete
+2026-08-22T17:49:22.2521078Z 38db9e8e6d70: Pull complete
+2026-08-22T17:49:22.5324155Z e521cd94a500: Pull complete
+2026-08-22T17:49:22.5365928Z Digest: sha256:4c1d7c6a0e867fe04e347faf00b1eb45bebbc488a83c97ced5c11bb43178de47
+2026-08-22T17:49:22.5377996Z Status: Downloaded newer image for ghcr.io/barrenechea/libxenon:latest
+2026-08-22T17:49:22.5387355Z ghcr.io/barrenechea/libxenon:latest
+2026-08-22T17:49:22.5451906Z ##[command]/usr/bin/docker create --name d8084c3e47844d8e9b713f7058e5d0fd_ghcriobarrenechealibxenonlatest_9d4451 --label eb5f52 --workdir /__w/xell-builder/xell-builder --network github_network_8309d4f82eb64fc4a0bd2ed8b10cc646  -e "HOME=/github/home" -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work":"/__w" -v "/home/runner/actions-runner/cached/2.336.0/externals":"/__e":ro -v "/home/runner/work/_temp":"/__w/_temp" -v "/home/runner/work/_actions":"/__w/_actions" -v "/opt/hostedtoolcache":"/__t" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" --entrypoint "tail" ghcr.io/barrenechea/libxenon:latest "-f" "/dev/null"
+2026-08-22T17:49:22.5667650Z 5f0198bf969c873b84a628c3f24f235c5479a3bb2fa2ebdda7f33a9516083114
+2026-08-22T17:49:22.5682279Z ##[command]/usr/bin/docker start 5f0198bf969c873b84a628c3f24f235c5479a3bb2fa2ebdda7f33a9516083114
+2026-08-22T17:49:22.7142790Z 5f0198bf969c873b84a628c3f24f235c5479a3bb2fa2ebdda7f33a9516083114
+2026-08-22T17:49:22.7156307Z ##[command]/usr/bin/docker ps --all --filter id=5f0198bf969c873b84a628c3f24f235c5479a3bb2fa2ebdda7f33a9516083114 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2026-08-22T17:49:22.7259076Z 5f0198bf969c873b84a628c3f24f235c5479a3bb2fa2ebdda7f33a9516083114 Up Less than a second
+2026-08-22T17:49:22.7271878Z ##[command]/usr/bin/docker inspect --format "{{range .Config.Env}}{{println .}}{{end}}" 5f0198bf969c873b84a628c3f24f235c5479a3bb2fa2ebdda7f33a9516083114
+2026-08-22T17:49:22.7381059Z HOME=/github/home
+2026-08-22T17:49:22.7381752Z GITHUB_ACTIONS=true
+2026-08-22T17:49:22.7387222Z CI=true
+2026-08-22T17:49:22.7388197Z PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+2026-08-22T17:49:22.7388845Z TZ=Europe/Berlin
+2026-08-22T17:49:22.7395560Z ##[endgroup]
+2026-08-22T17:49:22.7402675Z ##[group]Waiting for all services to be ready
+2026-08-22T17:49:22.7404489Z ##[endgroup]
+2026-08-22T17:49:22.7633081Z ##[group]Run actions/checkout@v6
+2026-08-22T17:49:22.7633638Z with:
+2026-08-22T17:49:22.7633892Z   repository: barrenechea/xell-reloaded
+2026-08-22T17:49:22.7634191Z   fetch-depth: 0
+2026-08-22T17:49:22.7636171Z   token: ***
+2026-08-22T17:49:22.7636397Z   ssh-strict: true
+2026-08-22T17:49:22.7636637Z   ssh-user: git
+2026-08-22T17:49:22.7636858Z   persist-credentials: true
+2026-08-22T17:49:22.7637119Z   clean: true
+2026-08-22T17:49:22.7637341Z   sparse-checkout-cone-mode: true
+2026-08-22T17:49:22.7637600Z   fetch-tags: false
+2026-08-22T17:49:22.7637862Z   show-progress: true
+2026-08-22T17:49:22.7638061Z   lfs: false
+2026-08-22T17:49:22.7638300Z   submodules: false
+2026-08-22T17:49:22.7638517Z   set-safe-directory: true
+2026-08-22T17:49:22.7638801Z   allow-unsafe-pr-checkout: false
+2026-08-22T17:49:22.7639164Z ##[endgroup]
+2026-08-22T17:49:22.7686142Z ##[command]/usr/bin/docker exec  5f0198bf969c873b84a628c3f24f235c5479a3bb2fa2ebdda7f33a9516083114 sh -c "cat /etc/*release | grep ^ID"
+2026-08-22T17:49:22.9201539Z Syncing repository: barrenechea/xell-reloaded
+2026-08-22T17:49:22.9203738Z ##[group]Getting Git version info
+2026-08-22T17:49:22.9204222Z Working directory is '/__w/xell-builder/xell-builder'
+2026-08-22T17:49:22.9205047Z [command]/usr/bin/git version
+2026-08-22T17:49:22.9205362Z git version 2.43.0
+2026-08-22T17:49:22.9206580Z ##[endgroup]
+2026-08-22T17:49:22.9212185Z Temporarily overriding HOME='/__w/_temp/9759eb6f-9d67-47b1-855c-b6dd8ff30a5c' before making global git config changes
+2026-08-22T17:49:22.9213072Z Adding repository directory to the temporary git global config as a safe directory
+2026-08-22T17:49:22.9213868Z [command]/usr/bin/git config --global --add safe.directory /__w/xell-builder/xell-builder
+2026-08-22T17:49:22.9238029Z Deleting the contents of '/__w/xell-builder/xell-builder'
+2026-08-22T17:49:22.9240330Z ##[group]Determining repository object format
+2026-08-22T17:49:23.1915383Z ##[endgroup]
+2026-08-22T17:49:23.1916468Z ##[group]Initializing the repository
+2026-08-22T17:49:23.1917335Z [command]/usr/bin/git init /__w/xell-builder/xell-builder
+2026-08-22T17:49:23.1951497Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-08-22T17:49:23.1952254Z hint: is subject to change. To configure the initial branch name to use in all
+2026-08-22T17:49:23.1952856Z hint: of your new repositories, which will suppress this warning, call:
+2026-08-22T17:49:23.1953360Z hint: 
+2026-08-22T17:49:23.1954613Z hint: 	git config --global init.defaultBranch <name>
+2026-08-22T17:49:23.1955175Z hint: 
+2026-08-22T17:49:23.1955635Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-08-22T17:49:23.1956217Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-08-22T17:49:23.1956932Z hint: 
+2026-08-22T17:49:23.1957200Z hint: 	git branch -m <name>
+2026-08-22T17:49:23.1957621Z Initialized empty Git repository in /__w/xell-builder/xell-builder/.git/
+2026-08-22T17:49:23.1964167Z [command]/usr/bin/git remote add origin https://github.com/barrenechea/xell-reloaded
+2026-08-22T17:49:23.1995882Z ##[endgroup]
+2026-08-22T17:49:23.1996475Z ##[group]Disabling automatic garbage collection
+2026-08-22T17:49:23.1996995Z [command]/usr/bin/git config --local gc.auto 0
+2026-08-22T17:49:23.2020611Z ##[endgroup]
+2026-08-22T17:49:23.2021128Z ##[group]Setting up auth
+2026-08-22T17:49:23.2021569Z Removing SSH command configuration
+2026-08-22T17:49:23.2025421Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-08-22T17:49:23.2051088Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-08-22T17:49:23.2198368Z Removing HTTP extra header
+2026-08-22T17:49:23.2202375Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-08-22T17:49:23.2225167Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-08-22T17:49:23.2356463Z Removing includeIf entries pointing to credentials config files
+2026-08-22T17:49:23.2360907Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-08-22T17:49:23.2382473Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-08-22T17:49:23.2519005Z [command]/usr/bin/git config --file /__w/_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-08-22T17:49:23.2548153Z [command]/usr/bin/git config --local includeIf.gitdir:/__w/xell-builder/xell-builder/.git.path /__w/_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config
+2026-08-22T17:49:23.2569139Z [command]/usr/bin/git config --local includeIf.gitdir:/__w/xell-builder/xell-builder/.git/worktrees/*.path /__w/_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config
+2026-08-22T17:49:23.2590697Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config
+2026-08-22T17:49:23.2611593Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config
+2026-08-22T17:49:23.2630358Z ##[endgroup]
+2026-08-22T17:49:23.2630944Z ##[group]Determining the default branch
+2026-08-22T17:49:23.2632976Z Retrieving the default branch name
+2026-08-22T17:49:23.5190548Z Default branch 'master'
+2026-08-22T17:49:23.5191667Z ##[endgroup]
+2026-08-22T17:49:23.5192621Z ##[group]Fetching the repository
+2026-08-22T17:49:23.5206974Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-08-22T17:49:24.1497454Z From https://github.com/barrenechea/xell-reloaded
+2026-08-22T17:49:24.1498107Z  * [new branch]      master     -> origin/master
+2026-08-22T17:49:24.1498472Z  * [new tag]         v0.991     -> v0.991
+2026-08-22T17:49:24.1498868Z  * [new tag]         v0.992     -> v0.992
+2026-08-22T17:49:24.1499206Z  * [new tag]         v0.993     -> v0.993
+2026-08-22T17:49:24.1513537Z ##[endgroup]
+2026-08-22T17:49:24.1514188Z ##[group]Determining the checkout info
+2026-08-22T17:49:24.1514691Z ##[endgroup]
+2026-08-22T17:49:24.1518828Z [command]/usr/bin/git sparse-checkout disable
+2026-08-22T17:49:24.1549827Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-08-22T17:49:24.1571199Z ##[group]Checking out the ref
+2026-08-22T17:49:24.1578920Z [command]/usr/bin/git checkout --progress --force -B master refs/remotes/origin/master
+2026-08-22T17:49:24.1620560Z Reset branch 'master'
+2026-08-22T17:49:24.1621123Z branch 'master' set up to track 'origin/master'.
+2026-08-22T17:49:24.1627429Z ##[endgroup]
+2026-08-22T17:49:24.1651195Z [command]/usr/bin/git log -1 --format=%H
+2026-08-22T17:49:24.1670072Z 0bb277b22c522655c4918e6a99ec401b9057fe68
+2026-08-22T17:49:24.1838898Z ##[group]Run echo DEVKITXENON=/usr/local/xenon >> $GITHUB_ENV
+2026-08-22T17:49:24.1839313Z [36;1mecho DEVKITXENON=/usr/local/xenon >> $GITHUB_ENV[0m
+2026-08-22T17:49:24.1839695Z [36;1mecho /usr/local/xenon/bin >> $GITHUB_PATH[0m
+2026-08-22T17:49:24.1839995Z [36;1mecho /usr/local/xenon/usr/bin >> $GITHUB_PATH[0m
+2026-08-22T17:49:24.1843791Z shell: sh -e {0}
+2026-08-22T17:49:24.1844042Z ##[endgroup]
+2026-08-22T17:49:24.2287794Z ##[group]Run git config --global --add safe.directory "$(pwd)"
+2026-08-22T17:49:24.2288207Z [36;1mgit config --global --add safe.directory "$(pwd)"[0m
+2026-08-22T17:49:24.2288779Z shell: sh -e {0}
+2026-08-22T17:49:24.2289005Z env:
+2026-08-22T17:49:24.2289230Z   DEVKITXENON: /usr/local/xenon
+2026-08-22T17:49:24.2289468Z ##[endgroup]
+2026-08-22T17:49:24.2731881Z ##[group]Run sed -i "s/console_set_colors(CONSOLE_COLOR_BLUE,CONSOLE_COLOR_WHITE);/console_set_colors(0x00000000,0x0000FF00);/" source/lv2/main.c
+2026-08-22T17:49:24.2732638Z [36;1msed -i "s/console_set_colors(CONSOLE_COLOR_BLUE,CONSOLE_COLOR_WHITE);/console_set_colors(0x00000000,0x0000FF00);/" source/lv2/main.c[0m
+2026-08-22T17:49:24.2733199Z shell: sh -e {0}
+2026-08-22T17:49:24.2733764Z env:
+2026-08-22T17:49:24.2733994Z   DEVKITXENON: /usr/local/xenon
+2026-08-22T17:49:24.2734240Z ##[endgroup]
+2026-08-22T17:49:24.3171221Z ##[group]Run # Create a temporary file
+2026-08-22T17:49:24.3171599Z [36;1m# Create a temporary file[0m
+2026-08-22T17:49:24.3171873Z [36;1mtouch /tmp/new_asciiart.h[0m
+2026-08-22T17:49:24.3172108Z [36;1m[0m
+2026-08-22T17:49:24.3172378Z [36;1m# Add the opening of the asciiart definition[0m
+2026-08-22T17:49:24.3172697Z [36;1mecho 'static char* asciiart =' > /tmp/new_asciiart.h[0m
+2026-08-22T17:49:24.3172986Z [36;1m[0m
+2026-08-22T17:49:24.3173198Z [36;1m# Decode base64 ASCII art to a file[0m
+2026-08-22T17:49:24.3176006Z [36;1mecho "CiBfXyAgIF9fICAgX19fXyAgICBfICAgICAgIF9fX19fICAgX19fX18gICAgX19fXyAgIF8gICBfClwgIFwgLyAgLyB8ICBfXyBcIHwgfCAgICAgfF8gICBffCB8XyAgIF98ICAvICAgIFwgfCB8IHwgfAogIFwgICAvICAgfCB8ICBcLyB8IHwgICAgICAgfCB8ICAgICB8IHwgICB8IC8gIFwvIHwgfF98IHwKICAgPiA8ICAgIHwgfCBfXyAgfCB8ICAgICAgIHwgfCAgICAgfCB8ICAgfCB8ICAgICB8ICBfICB8CiAgLyAgIFwgICB8IHxfXCBcIHwgfF9fXyAgIF98IHxfICAgIHwgfCAgIHwgXF9fL1wgfCB8IHwgfAovX18vIFxfX1wgIFxfX19fLyAgXF9fX18vIHxfX19fX3wgICB8X3wgICAgXF9fX18vIHxffCB8X3wK" | base64 -d > /tmp/ascii_input.txt[0m
+2026-08-22T17:49:24.3178473Z [36;1m[0m
+2026-08-22T17:49:24.3178769Z [36;1m# Process each line of the input ASCII art and format it properly[0m
+2026-08-22T17:49:24.3179106Z [36;1mwhile IFS= read -r line; do[0m
+2026-08-22T17:49:24.3179362Z [36;1m  # Escape backslashes[0m
+2026-08-22T17:49:24.3179661Z [36;1m  escaped_line=$(echo "$line" | sed 's/\\/\\\\/g')[0m
+2026-08-22T17:49:24.3179987Z [36;1m  # Escape any double quotes[0m
+2026-08-22T17:49:24.3180261Z [36;1m  escaped_line=$(echo "$escaped_line" | sed 's/"/\\"/g')[0m
+2026-08-22T17:49:24.3180635Z [36;1m  # Add the line with proper C string formatting[0m
+2026-08-22T17:49:24.3180953Z [36;1m  echo '"'"$escaped_line"'\n"' >> /tmp/new_asciiart.h[0m
+2026-08-22T17:49:24.3181264Z [36;1mdone < /tmp/ascii_input.txt[0m
+2026-08-22T17:49:24.3181505Z [36;1m[0m
+2026-08-22T17:49:24.3181714Z [36;1m# Add the closing part with VERSION[0m
+2026-08-22T17:49:24.3182106Z [36;1mecho '"             Free60.org XeLL - Xenon Linux Loader " VERSION "\n";' >> /tmp/new_asciiart.h[0m
+2026-08-22T17:49:24.3182451Z [36;1m[0m
+2026-08-22T17:49:24.3182673Z [36;1m# Add the asciitail part[0m
+2026-08-22T17:49:24.3182993Z [36;1mecho 'static char* asciitail =' >> /tmp/new_asciiart.h[0m
+2026-08-22T17:49:24.3183604Z [36;1mecho '"    Special Corona & Winchester Compatible XeLL version\n\n";' >> /tmp/new_asciiart.h[0m
+2026-08-22T17:49:24.3184005Z [36;1m[0m
+2026-08-22T17:49:24.3184212Z [36;1m# Ensure CP437 encoding[0m
+2026-08-22T17:49:24.3184650Z [36;1miconv -f UTF-8 -t CP437 /tmp/new_asciiart.h > /tmp/new_asciiart_cp437.h || cp /tmp/new_asciiart.h /tmp/new_asciiart_cp437.h[0m
+2026-08-22T17:49:24.3185186Z [36;1m[0m
+2026-08-22T17:49:24.3185400Z [36;1m# Replace the original file[0m
+2026-08-22T17:49:24.3185718Z [36;1mcp /tmp/new_asciiart_cp437.h source/lv2/asciiart.h[0m
+2026-08-22T17:49:24.3187813Z shell: bash --noprofile --norc -e -o pipefail {0}
+2026-08-22T17:49:24.3188101Z env:
+2026-08-22T17:49:24.3188345Z   DEVKITXENON: /usr/local/xenon
+2026-08-22T17:49:24.3188583Z ##[endgroup]
+2026-08-22T17:49:24.3776231Z ##[group]Run make dist
+2026-08-22T17:49:24.3776515Z [36;1mmake dist[0m
+2026-08-22T17:49:24.3776878Z shell: sh -e {0}
+2026-08-22T17:49:24.3777094Z env:
+2026-08-22T17:49:24.3777332Z   DEVKITXENON: /usr/local/xenon
+2026-08-22T17:49:24.3777571Z ##[endgroup]
+2026-08-22T17:49:24.4158733Z Cleaning...
+2026-08-22T17:49:24.4171231Z clean ...
+2026-08-22T17:49:24.4184724Z Building xell-1f ...
+2026-08-22T17:49:24.4199246Z [startup.S]
+2026-08-22T17:49:24.4274227Z [main.c]
+2026-08-22T17:49:24.4783584Z [cache.S]
+2026-08-22T17:49:24.4839505Z source/lv1/cache.S: Assembler messages:
+2026-08-22T17:49:24.4839877Z source/lv1/cache.S:14: Warning: invalid register expression
+2026-08-22T17:49:24.4840317Z source/lv1/cache.S:31: Warning: invalid register expression
+2026-08-22T17:49:24.4840672Z source/lv1/cache.S:48: Warning: invalid register expression
+2026-08-22T17:49:24.4841000Z source/lv1/cache.S:49: Warning: invalid register expression
+2026-08-22T17:49:24.4846314Z [ctype.c]
+2026-08-22T17:49:24.4916334Z [string.c]
+2026-08-22T17:49:24.5382973Z [time.c]
+2026-08-22T17:49:24.5562335Z [vsprintf.c]
+2026-08-22T17:49:24.6212338Z [puff.c]
+2026-08-22T17:49:24.6902628Z /usr/local/xenon/lib/gcc/xenon/13.3.0/../../../../xenon/bin/ld: warning: xell-1f.elf has a LOAD segment with RWX permissions
+2026-08-22T17:49:24.6948396Z [file.c]
+2026-08-22T17:49:24.7372763Z [log.c]
+2026-08-22T17:49:24.7641855Z Creating version.h
+2026-08-22T17:49:24.7689406Z [main.c]
+2026-08-22T17:49:24.8058855Z [mount.c]
+2026-08-22T17:49:24.8158654Z /__w/xell-builder/xell-builder/source/lv2/mount.c: In function 'AddPartition':
+2026-08-22T17:49:24.8159466Z /__w/xell-builder/xell-builder/source/lv2/mount.c:203:15: warning: unused variable 'name' [-Wunused-variable]
+2026-08-22T17:49:24.8160268Z   203 |         char *name;
+2026-08-22T17:49:24.8160595Z       |               ^~~~
+2026-08-22T17:49:24.8261437Z /__w/xell-builder/xell-builder/source/lv2/mount.c:202:27: warning: '%i' directive writing between 1 and 11 bytes into a region of size 10 [-Wformat-overflow=]
+2026-08-22T17:49:24.8262328Z   202 |         sprintf(mount, "%s%i", prefix[device], *devnum);
+2026-08-22T17:49:24.8262743Z       |                           ^~
+2026-08-22T17:49:24.8263366Z /__w/xell-builder/xell-builder/source/lv2/mount.c:202:24: note: directive argument in the range [-2147483648, 9]
+2026-08-22T17:49:24.8264277Z   202 |         sprintf(mount, "%s%i", prefix[device], *devnum);
+2026-08-22T17:49:24.8264720Z       |                        ^~~~~~
+2026-08-22T17:49:24.8265363Z /__w/xell-builder/xell-builder/source/lv2/mount.c:202:9: note: 'sprintf' output 2 or more bytes (assuming 12) into a destination of size 10
+2026-08-22T17:49:24.8266066Z   202 |         sprintf(mount, "%s%i", prefix[device], *devnum);
+2026-08-22T17:49:24.8266519Z       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-08-22T17:49:24.8616193Z [tftp.c]
+2026-08-22T17:49:24.9289179Z [httpd.c]
+2026-08-22T17:49:25.0384152Z [httpd_flash.c]
+2026-08-22T17:49:25.0727108Z [httpd_fuse.c]
+2026-08-22T17:49:25.1090713Z [httpd_index.c]
+2026-08-22T17:49:25.1424820Z [httpd_keyvault.c]
+2026-08-22T17:49:25.1813847Z [kbootconf.c]
+2026-08-22T17:49:25.2769924Z [puff.c]
+2026-08-22T17:49:25.3519948Z [device_tree_include.S]
+2026-08-22T17:49:25.3586547Z linking ... stage2.elf
+2026-08-22T17:49:25.3796842Z /usr/local/xenon/lib/gcc/xenon/13.3.0/../../../../xenon/bin/ld: warning: /usr/local/xenon/lib/gcc/xenon/13.3.0/../../../../xenon/lib/../lib/crtn.o: missing .note.GNU-stack section implies executable stack
+2026-08-22T17:49:25.3797641Z /usr/local/xenon/lib/gcc/xenon/13.3.0/../../../../xenon/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+2026-08-22T17:49:25.3908368Z converting and stripping ... stage2.elf32
+2026-08-22T17:49:25.4388434Z 11+1 records in
+2026-08-22T17:49:25.4388809Z 11+1 records out
+2026-08-22T17:49:25.4389200Z 180486 bytes (180 kB, 176 KiB) copied, 9.0343e-05 s, 2.0 GB/s
+2026-08-22T17:49:25.4393877Z Building xell-2f ...
+2026-08-22T17:49:25.4407771Z [startup.S]
+2026-08-22T17:49:25.4478216Z [main.c]
+2026-08-22T17:49:25.4997410Z [cache.S]
+2026-08-22T17:49:25.5052076Z source/lv1/cache.S: Assembler messages:
+2026-08-22T17:49:25.5052554Z source/lv1/cache.S:14: Warning: invalid register expression
+2026-08-22T17:49:25.5052987Z source/lv1/cache.S:31: Warning: invalid register expression
+2026-08-22T17:49:25.5053360Z source/lv1/cache.S:48: Warning: invalid register expression
+2026-08-22T17:49:25.5053880Z source/lv1/cache.S:49: Warning: invalid register expression
+2026-08-22T17:49:25.5083970Z [ctype.c]
+2026-08-22T17:49:25.5154358Z [string.c]
+2026-08-22T17:49:25.5623317Z [time.c]
+2026-08-22T17:49:25.5804772Z [vsprintf.c]
+2026-08-22T17:49:25.6461062Z [puff.c]
+2026-08-22T17:49:25.7155360Z /usr/local/xenon/lib/gcc/xenon/13.3.0/../../../../xenon/bin/ld: warning: xell-2f.elf has a LOAD segment with RWX permissions
+2026-08-22T17:49:25.7208427Z converting and stripping ... stage2.elf32
+2026-08-22T17:49:25.7860113Z 11+1 records in
+2026-08-22T17:49:25.7860461Z 11+1 records out
+2026-08-22T17:49:25.7860783Z 180486 bytes (180 kB, 176 KiB) copied, 9.8087e-05 s, 1.8 GB/s
+2026-08-22T17:49:25.7866079Z Building xell-gggggg ...
+2026-08-22T17:49:25.7880556Z [startup.S]
+2026-08-22T17:49:25.7946298Z [main.c]
+2026-08-22T17:49:25.8439508Z [cache.S]
+2026-08-22T17:49:25.8492229Z source/lv1/cache.S: Assembler messages:
+2026-08-22T17:49:25.8492709Z source/lv1/cache.S:14: Warning: invalid register expression
+2026-08-22T17:49:25.8493262Z source/lv1/cache.S:31: Warning: invalid register expression
+2026-08-22T17:49:25.8494174Z source/lv1/cache.S:48: Warning: invalid register expression
+2026-08-22T17:49:25.8494631Z source/lv1/cache.S:49: Warning: invalid register expression
+2026-08-22T17:49:25.8498295Z [ctype.c]
+2026-08-22T17:49:25.8568518Z [string.c]
+2026-08-22T17:49:25.9038038Z [time.c]
+2026-08-22T17:49:25.9244925Z [vsprintf.c]
+2026-08-22T17:49:25.9902163Z [puff.c]
+2026-08-22T17:49:26.0596675Z /usr/local/xenon/lib/gcc/xenon/13.3.0/../../../../xenon/bin/ld: warning: xell-gggggg.elf has a LOAD segment with RWX permissions
+2026-08-22T17:49:26.0648485Z converting and stripping ... stage2.elf32
+2026-08-22T17:49:26.1120882Z 11+1 records in
+2026-08-22T17:49:26.1121188Z 11+1 records out
+2026-08-22T17:49:26.1121578Z 180486 bytes (180 kB, 176 KiB) copied, 8.8962e-05 s, 2.0 GB/s
+2026-08-22T17:49:26.1126442Z Building xell-gggggg_cygnos_demon ...
+2026-08-22T17:49:26.1141098Z [startup.S]
+2026-08-22T17:49:26.1206740Z [main.c]
+2026-08-22T17:49:26.1661616Z [cache.S]
+2026-08-22T17:49:26.1712037Z source/lv1/cache.S: Assembler messages:
+2026-08-22T17:49:26.1712499Z source/lv1/cache.S:14: Warning: invalid register expression
+2026-08-22T17:49:26.1712862Z source/lv1/cache.S:31: Warning: invalid register expression
+2026-08-22T17:49:26.1713210Z source/lv1/cache.S:48: Warning: invalid register expression
+2026-08-22T17:49:26.1713662Z source/lv1/cache.S:49: Warning: invalid register expression
+2026-08-22T17:49:26.1721800Z [ctype.c]
+2026-08-22T17:49:26.1785580Z [string.c]
+2026-08-22T17:49:26.2252772Z [time.c]
+2026-08-22T17:49:26.2435098Z [vsprintf.c]
+2026-08-22T17:49:26.3087197Z [puff.c]
+2026-08-22T17:49:26.3782699Z /usr/local/xenon/lib/gcc/xenon/13.3.0/../../../../xenon/bin/ld: warning: xell-gggggg_cygnos_demon.elf has a LOAD segment with RWX permissions
+2026-08-22T17:49:26.3833824Z converting and stripping ... stage2.elf32
+2026-08-22T17:49:26.4311548Z 11+1 records in
+2026-08-22T17:49:26.4311876Z 11+1 records out
+2026-08-22T17:49:26.4312295Z 180486 bytes (180 kB, 176 KiB) copied, 9.2744e-05 s, 1.9 GB/s
+2026-08-22T17:49:26.4318359Z Building xell-1f_cygnos_demon ...
+2026-08-22T17:49:26.4332525Z [startup.S]
+2026-08-22T17:49:26.4399292Z [main.c]
+2026-08-22T17:49:26.4905339Z [cache.S]
+2026-08-22T17:49:26.4955753Z source/lv1/cache.S: Assembler messages:
+2026-08-22T17:49:26.4956142Z source/lv1/cache.S:14: Warning: invalid register expression
+2026-08-22T17:49:26.4957716Z source/lv1/cache.S:31: Warning: invalid register expression
+2026-08-22T17:49:26.4958110Z source/lv1/cache.S:48: Warning: invalid register expression
+2026-08-22T17:49:26.4958628Z source/lv1/cache.S:49: Warning: invalid register expression
+2026-08-22T17:49:26.4963266Z [ctype.c]
+2026-08-22T17:49:26.5032741Z [string.c]
+2026-08-22T17:49:26.5489943Z [time.c]
+2026-08-22T17:49:26.5669166Z [vsprintf.c]
+2026-08-22T17:49:26.6325608Z [puff.c]
+2026-08-22T17:49:26.7012546Z /usr/local/xenon/lib/gcc/xenon/13.3.0/../../../../xenon/bin/ld: warning: xell-1f_cygnos_demon.elf has a LOAD segment with RWX permissions
+2026-08-22T17:49:26.7063091Z converting and stripping ... stage2.elf32
+2026-08-22T17:49:26.7535933Z 11+1 records in
+2026-08-22T17:49:26.7536253Z 11+1 records out
+2026-08-22T17:49:26.7536625Z 180486 bytes (180 kB, 176 KiB) copied, 9.3345e-05 s, 1.9 GB/s
+2026-08-22T17:49:26.7542230Z Building xell-2f_cygnos_demon ...
+2026-08-22T17:49:26.7556885Z [startup.S]
+2026-08-22T17:49:26.7622577Z [main.c]
+2026-08-22T17:49:26.8129468Z [cache.S]
+2026-08-22T17:49:26.8180850Z source/lv1/cache.S: Assembler messages:
+2026-08-22T17:49:26.8181345Z source/lv1/cache.S:14: Warning: invalid register expression
+2026-08-22T17:49:26.8181828Z source/lv1/cache.S:31: Warning: invalid register expression
+2026-08-22T17:49:26.8182257Z source/lv1/cache.S:48: Warning: invalid register expression
+2026-08-22T17:49:26.8182618Z source/lv1/cache.S:49: Warning: invalid register expression
+2026-08-22T17:49:26.8187654Z [ctype.c]
+2026-08-22T17:49:26.8288919Z [string.c]
+2026-08-22T17:49:26.8758031Z [time.c]
+2026-08-22T17:49:26.8939280Z [vsprintf.c]
+2026-08-22T17:49:26.9590503Z [puff.c]
+2026-08-22T17:49:27.0276445Z /usr/local/xenon/lib/gcc/xenon/13.3.0/../../../../xenon/bin/ld: warning: xell-2f_cygnos_demon.elf has a LOAD segment with RWX permissions
+2026-08-22T17:49:27.0328144Z converting and stripping ... stage2.elf32
+2026-08-22T17:49:27.0797521Z 11+1 records in
+2026-08-22T17:49:27.0797788Z 11+1 records out
+2026-08-22T17:49:27.0923292Z 180486 bytes (180 kB, 176 KiB) copied, 0.000114938 s, 1.6 GB/s
+2026-08-22T17:49:27.0923917Z AUTHORS
+2026-08-22T17:49:27.0924138Z CHANGELOG
+2026-08-22T17:49:27.0924420Z README
+2026-08-22T17:49:27.0924640Z _DEBUG/
+2026-08-22T17:49:27.0924850Z _DEBUG/stage2.elf
+2026-08-22T17:49:27.1895534Z stage2.elf32
+2026-08-22T17:49:27.2070362Z xell-1f.bin
+2026-08-22T17:49:27.2151901Z xell-1f_cygnos_demon.bin
+2026-08-22T17:49:27.2190508Z xell-2f.bin
+2026-08-22T17:49:27.2235963Z xell-2f_cygnos_demon.bin
+2026-08-22T17:49:27.2290504Z xell-gggggg.bin
+2026-08-22T17:49:27.2328070Z xell-gggggg_cygnos_demon.bin
+2026-08-22T17:49:27.2415343Z make[1]: Entering directory '/__w/xell-builder/xell-builder'
+2026-08-22T17:49:27.2418292Z Cleaning...
+2026-08-22T17:49:27.2430813Z clean ...
+2026-08-22T17:49:27.2449758Z make[1]: Leaving directory '/__w/xell-builder/xell-builder'
+2026-08-22T17:49:27.2529632Z ##[group]Run actions/upload-artifact@v7
+2026-08-22T17:49:27.2529919Z with:
+2026-08-22T17:49:27.2530156Z   path: XeLL_Reloaded-2stages-*.tar.gz
+2026-08-22T17:49:27.2530460Z   compression-level: 0
+2026-08-22T17:49:27.2530700Z   name: artifact
+2026-08-22T17:49:27.2530936Z   if-no-files-found: warn
+2026-08-22T17:49:27.2531180Z   overwrite: false
+2026-08-22T17:49:27.2531402Z   include-hidden-files: false
+2026-08-22T17:49:27.2531675Z   archive: true
+2026-08-22T17:49:27.2531942Z env:
+2026-08-22T17:49:27.2532169Z   DEVKITXENON: /usr/local/xenon
+2026-08-22T17:49:27.2532412Z ##[endgroup]
+2026-08-22T17:49:27.2537336Z ##[command]/usr/bin/docker exec  5f0198bf969c873b84a628c3f24f235c5479a3bb2fa2ebdda7f33a9516083114 sh -c "cat /etc/*release | grep ^ID"
+2026-08-22T17:49:27.4287165Z With the provided path, there will be 1 file uploaded
+2026-08-22T17:49:27.4289132Z Artifact name is valid!
+2026-08-22T17:49:27.4290042Z Root directory input is valid!
+2026-08-22T17:49:27.6994791Z Uploading artifact: artifact.zip
+2026-08-22T17:49:27.7025141Z Beginning upload of artifact content to blob storage
+2026-08-22T17:49:28.1561241Z Uploaded bytes 2118789
+2026-08-22T17:49:28.1987799Z Finished uploading artifact content to blob storage!
+2026-08-22T17:49:28.1988512Z SHA256 digest of uploaded artifact is 18032ed7c54ffc50d74b0a64b2dcb4914bb6be1cdd981b5b68b25b1d69fb79b3
+2026-08-22T17:49:28.1989061Z Finalizing artifact upload
+2026-08-22T17:49:28.4704316Z Artifact artifact successfully finalized. Artifact ID 9479771641
+2026-08-22T17:49:28.4705052Z Artifact artifact has been successfully uploaded! Final size is 2118789 bytes. Artifact ID is 9479771641
+2026-08-22T17:49:28.4708862Z Artifact download URL: https://github.com/xell-worker/xell-builder/actions/runs/32588859557/artifacts/9479771641
+2026-08-22T17:49:28.4874663Z Post job cleanup.
+2026-08-22T17:49:28.4882417Z ##[command]/usr/bin/docker exec  5f0198bf969c873b84a628c3f24f235c5479a3bb2fa2ebdda7f33a9516083114 sh -c "cat /etc/*release | grep ^ID"
+2026-08-22T17:49:28.6242790Z [command]/usr/bin/git version
+2026-08-22T17:49:28.6274701Z git version 2.43.0
+2026-08-22T17:49:28.6298730Z Copying '/github/home/.gitconfig' to '/__w/_temp/9a2861c5-3c54-480f-9b60-11ef21a6dbde/.gitconfig'
+2026-08-22T17:49:28.6308023Z Temporarily overriding HOME='/__w/_temp/9a2861c5-3c54-480f-9b60-11ef21a6dbde' before making global git config changes
+2026-08-22T17:49:28.6309183Z Adding repository directory to the temporary git global config as a safe directory
+2026-08-22T17:49:28.6311009Z [command]/usr/bin/git config --global --add safe.directory /__w/xell-builder/xell-builder
+2026-08-22T17:49:28.6331735Z Removing SSH command configuration
+2026-08-22T17:49:28.6336076Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-08-22T17:49:28.6361617Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-08-22T17:49:28.6523090Z Removing HTTP extra header
+2026-08-22T17:49:28.6527508Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-08-22T17:49:28.6549793Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-08-22T17:49:28.6711502Z Removing includeIf entries pointing to credentials config files
+2026-08-22T17:49:28.6715989Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-08-22T17:49:28.6731318Z includeif.gitdir:/__w/xell-builder/xell-builder/.git.path
+2026-08-22T17:49:28.6731825Z includeif.gitdir:/__w/xell-builder/xell-builder/.git/worktrees/*.path
+2026-08-22T17:49:28.6733326Z includeif.gitdir:/github/workspace/.git.path
+2026-08-22T17:49:28.6733853Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-08-22T17:49:28.6738108Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/__w/xell-builder/xell-builder/.git.path
+2026-08-22T17:49:28.6758513Z /__w/_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config
+2026-08-22T17:49:28.6767155Z [command]/usr/bin/git config --local --unset includeif.gitdir:/__w/xell-builder/xell-builder/.git.path /__w/_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config
+2026-08-22T17:49:28.6790753Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/__w/xell-builder/xell-builder/.git/worktrees/*.path
+2026-08-22T17:49:28.6804836Z /__w/_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config
+2026-08-22T17:49:28.6811392Z [command]/usr/bin/git config --local --unset includeif.gitdir:/__w/xell-builder/xell-builder/.git/worktrees/*.path /__w/_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config
+2026-08-22T17:49:28.6839184Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-08-22T17:49:28.6861495Z /github/runner_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config
+2026-08-22T17:49:28.6869054Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config
+2026-08-22T17:49:28.6898256Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-08-22T17:49:28.6915367Z /github/runner_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config
+2026-08-22T17:49:28.6926204Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config
+2026-08-22T17:49:28.6957507Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-08-22T17:49:28.7104680Z Removing credentials config '/__w/_temp/git-credentials-7e876fbc-0629-4c12-bd2f-83de3dac225f.config'
+2026-08-22T17:49:28.7230577Z Stop and remove container: d8084c3e47844d8e9b713f7058e5d0fd_ghcriobarrenechealibxenonlatest_9d4451
+2026-08-22T17:49:28.7234255Z ##[command]/usr/bin/docker rm --force 5f0198bf969c873b84a628c3f24f235c5479a3bb2fa2ebdda7f33a9516083114
+2026-08-22T17:49:28.8385231Z 5f0198bf969c873b84a628c3f24f235c5479a3bb2fa2ebdda7f33a9516083114
+2026-08-22T17:49:28.8406820Z Remove container network: github_network_8309d4f82eb64fc4a0bd2ed8b10cc646
+2026-08-22T17:49:28.8410037Z ##[command]/usr/bin/docker network rm github_network_8309d4f82eb64fc4a0bd2ed8b10cc646
+2026-08-22T17:49:28.9363958Z github_network_8309d4f82eb64fc4a0bd2ed8b10cc646
+2026-08-22T17:49:28.9429246Z Cleaning up orphan processes
